@@ -12,6 +12,9 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.servlet.support.RequestContextUtils;
+
+import java.util.Locale;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -52,5 +55,22 @@ public class LocaletestApplicationTests {
                 .buildRequest(context.getServletContext());
         localeTestController.printLocale("fi-FI", testRequest);
     }
+
+    @Test
+	public void testLocaleChangeThroughServiceWithPreferredLocale() {
+		MockHttpServletRequest testRequest = mockRequestBuilder.header("Accept-Language", "fi-FI")
+				.buildRequest(context.getServletContext());
+		testRequest.addPreferredLocale(new Locale("fi", "FI"));
+		localePrinterService.printLocale(testRequest);
+	}
+
+	@Test
+	public void testLocaleChangeThroughControllerWithPreferredLocale() {
+		MockHttpServletRequest testRequest = mockRequestBuilder.header("Accept-Language", "fi-FI")
+				.buildRequest(context.getServletContext());
+		testRequest.addPreferredLocale(new Locale("fi", "FI"));
+		localeTestController.printLocale("fi-FI",testRequest);
+	}
+
 
 }
