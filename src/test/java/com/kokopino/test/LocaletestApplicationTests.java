@@ -21,6 +21,9 @@ public class LocaletestApplicationTests {
 	LocalePrinterService localePrinterService;
 
 	@Autowired
+    LocaleTestController localeTestController;
+
+	@Autowired
 	WebApplicationContext context;
 
 	MockMvc mockMvc;
@@ -37,9 +40,17 @@ public class LocaletestApplicationTests {
 	}
 
 	@Test
-	public void testLocaleChange() {
-		MockHttpServletRequest testRequest = mockRequestBuilder.header("Accept-Language", "fi-FI").buildRequest(context.getServletContext());
+	public void testLocaleChangeInService() {
+		MockHttpServletRequest testRequest = mockRequestBuilder.header("Accept-Language", "fi-FI")
+                .buildRequest(context.getServletContext());
 		localePrinterService.printLocale(testRequest);
 	}
+
+	@Test
+    public void testLocaleChangeInController() {
+        MockHttpServletRequest testRequest = mockRequestBuilder.header("Accept-Language", "fi-FI")
+                .buildRequest(context.getServletContext());
+        localeTestController.printLocale("fi-FI", testRequest);
+    }
 
 }
