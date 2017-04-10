@@ -57,7 +57,7 @@ public class LocaletestApplicationTests {
     }
 
     @Test
-	public void testLocaleChangeThroughServiceWithPreferredLocale() {
+	public void testLocaleChangeThroughServiceWithPreferredLocaleFI() {
 		MockHttpServletRequest testRequest = mockRequestBuilder.header("Accept-Language", "fi-FI")
 				.buildRequest(context.getServletContext());
 		testRequest.addPreferredLocale(new Locale("fi", "FI"));
@@ -65,12 +65,27 @@ public class LocaletestApplicationTests {
 	}
 
 	@Test
-	public void testLocaleChangeThroughControllerWithPreferredLocale() {
+	public void testLocaleChangeThroughServiceWithPreferredLocaleEN() {
+		MockHttpServletRequest testRequest = mockRequestBuilder.header("Accept-Language", "en-EN")
+				.buildRequest(context.getServletContext());
+		testRequest.addPreferredLocale(new Locale("en", "EN"));
+		localePrinterService.printLocale(testRequest);
+	}
+
+	@Test
+	public void testLocaleChangeThroughControllerWithPreferredLocaleFI() {
 		MockHttpServletRequest testRequest = mockRequestBuilder.header("Accept-Language", "fi-FI")
 				.buildRequest(context.getServletContext());
 		testRequest.addPreferredLocale(new Locale("fi", "FI"));
 		localeTestController.printLocale("fi-FI",testRequest);
 	}
 
+	@Test
+	public void testLocaleChangeThroughControllerWithPreferredLocaleEN() {
+		MockHttpServletRequest testRequest = mockRequestBuilder.header("Accept-Language", "en-EN")
+				.buildRequest(context.getServletContext());
+		testRequest.addPreferredLocale(new Locale("en", "EN"));
+		localeTestController.printLocale("en-en",testRequest);
+	}
 
 }
